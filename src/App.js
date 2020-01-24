@@ -1,14 +1,16 @@
 import React from 'react';
+import { Section, Container } from 'bloomer';
 
 import Items from './components/Items';
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Magic Item Bag</h1>
+    <Section>
+    <Container isFluid className="App">
+      <div className="level"><h1 className="level-item title is-1">Magic Item Bag</h1></div>
       <Items />
-    </div>
+    </Container>
+    </Section>
   );
 }
 

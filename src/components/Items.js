@@ -1,31 +1,39 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchItems } from '../actions/itemsActions';
 
-const Items = props => {
+import { LevelItem, Button } from 'bloomer';
+import ItemCard from './ItemCard';
+
+const Items = () => {
+  const data = useSelector(state => state);
+  const dispatch = useDispatch();
+
   return (
     <>
-      <button onClick={props.fetchItems}>Get Items</button>
-      {!props.items && !props.isFetching && (
-        <h2>Fill your bag with magic items!</h2>
+      {!data.items && !data.isFetching && (
+        <>
+        <div className="level">
+          <LevelItem><Button isColor='primary' onClick={() => dispatch(fetchItems())}>Get Items</Button></LevelItem>
+        </div>
+        <div className="level">
+          <LevelItem><h2 className="subtitle is-2">Fill your bag with magic items!</h2></LevelItem>
+        </div>
+        </>
       )}
-      {props.isFetching && (
-        <p>Please wait...</p>
+      {data.isFetching && (
+        <div className="level">
+          <LevelItem><Button isColor='warning' isLoading></Button></LevelItem>
+        </div>
       )}
-      {props.items && !props.isFetching && (
-        props.items.map(item => (<h3>{item.name}</h3>))
+      {data.items && !data.isFetching && (
+        <div className="columns is-multiline">
+          {data.items.map(item => <ItemCard key={item.slug} item={item} />)}
+        </div>
       )}
     </>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    isFetching: state.isFetching,
-    items: state.items,
-    error: state.error
-  };
-};
-
-export default connect(mapStateToProps, { fetchItems })(Items);
+export default Items;

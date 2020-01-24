@@ -7,7 +7,7 @@ import logger from 'redux-logger';
 
 import rootReducer from './reducers';
 
-import './index.css';
+import 'bulma/css/bulma.min.css';
 import App from './App';
 
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
